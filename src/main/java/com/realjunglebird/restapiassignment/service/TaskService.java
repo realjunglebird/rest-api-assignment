@@ -16,10 +16,12 @@ public class TaskService {
 
     // Добавление новой задачи
     public Task createTask(TaskRequest taskRequest) {
-        Task task = new Task(taskRequest.getTitle());
-        task.setId(idCounter.getAndIncrement());
-        task.setCompleted(taskRequest.isCompleted());
-
+        Task task = new Task(
+                idCounter.getAndIncrement(),
+                taskRequest.getTitle(),
+                taskRequest.getDescription(),
+                taskRequest.isCompleted()
+        );
         tasks.put(task.getId(), task);
         return task;
     }
@@ -41,6 +43,7 @@ public class TaskService {
             return null;
         }
         existingTask.setTitle(taskRequest.getTitle());
+        existingTask.setDescription(taskRequest.getDescription());
         existingTask.setCompleted(taskRequest.isCompleted());
         return existingTask;
     }
