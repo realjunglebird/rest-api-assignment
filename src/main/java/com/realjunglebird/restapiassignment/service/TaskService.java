@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -53,6 +54,35 @@ public class TaskService {
         existingTask.setDescription(taskRequest.getDescription());
         existingTask.setCompleted(taskRequest.isCompleted());
         return existingTask;
+    }
+
+    // Частичное обновление задачи по идентификатору
+    public Task partialUpdateTask(Long id, Map<String, Object> fields) {
+        Task task = tasks.get(id);
+        if (task == null) {
+            return null;
+        }
+        fields.forEach((key, value) -> {
+            switch (key) {
+                case "title":
+                    if (value != null) {
+                        task.setTitle((String) value);
+                    }
+                    break;
+                case "description":
+                    task.setDescription(value == null ? null : (String) value);
+                    break;
+                case "completed":
+                    if (value != null) {
+                        task.setCompleted((Boolean) value);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+        //task.setUpdatedAt(LocalDateTime.now());
+        return task;
     }
 
     // Удаление задачи по идентификатору

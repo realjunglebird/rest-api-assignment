@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/tasks")
@@ -53,6 +54,20 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
         Task updatedTask = taskService.updateTask(id, taskRequest);
+        if (updatedTask != null) {
+            return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Частичное обновление задачи по идентификатору
+    @PatchMapping("/{id}")
+    public ResponseEntity<Task> partialUpdateTask(
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> fields
+    ) {
+        Task updatedTask = taskService.partialUpdateTask(id, fields);
         if (updatedTask != null) {
             return new ResponseEntity<>(updatedTask, HttpStatus.OK);
         } else {
