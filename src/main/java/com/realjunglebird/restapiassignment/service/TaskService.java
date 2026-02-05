@@ -36,6 +36,13 @@ public class TaskService {
         return tasks.get(id);
     }
 
+    // Получение списка задач по статусу (активные/завершенные)
+    public List<Task> getTasksByStatus(boolean completed) {
+        return tasks.values().stream()
+                .filter(task -> task.isCompleted() == completed)
+                .toList();
+    }
+
     // Обновление задачи по идентификатору
     public Task updateTask(Long id, TaskRequest taskRequest) {
         Task existingTask = tasks.get(id);

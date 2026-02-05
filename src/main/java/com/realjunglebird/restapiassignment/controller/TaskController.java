@@ -42,6 +42,13 @@ public class TaskController {
         }
     }
 
+    // Получение списка задач по статусу (активные/завершенные)
+    @GetMapping("/status/{completed}")
+    public ResponseEntity<List<Task>> getTasksByStatus(@PathVariable boolean completed) {
+        List<Task> tasks = taskService.getTasksByStatus(completed);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
     // Обновление задачи по идентификатору
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
