@@ -52,7 +52,10 @@ public class TaskController {
 
     // Обновление задачи по идентификатору
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<Task> updateTask(
+            @PathVariable Long id,
+            @RequestBody TaskRequest taskRequest
+    ) {
         Task updatedTask = taskService.updateTask(id, taskRequest);
         if (updatedTask != null) {
             return new ResponseEntity<>(updatedTask, HttpStatus.OK);

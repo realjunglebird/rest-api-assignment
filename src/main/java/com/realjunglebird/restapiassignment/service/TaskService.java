@@ -46,14 +46,14 @@ public class TaskService {
 
     // Обновление задачи по идентификатору
     public Task updateTask(Long id, TaskRequest taskRequest) {
-        Task existingTask = tasks.get(id);
-        if (existingTask == null) {
+        Task task = tasks.get(id);
+        if (task == null) {
             return null;
         }
-        existingTask.setTitle(taskRequest.getTitle());
-        existingTask.setDescription(taskRequest.getDescription());
-        existingTask.setCompleted(taskRequest.isCompleted());
-        return existingTask;
+        task.setTitle(taskRequest.getTitle());
+        task.setDescription(taskRequest.getDescription());
+        task.setCompleted(taskRequest.isCompleted());
+        return task;
     }
 
     // Частичное обновление задачи по идентификатору
@@ -81,7 +81,6 @@ public class TaskService {
                     break;
             }
         });
-        //task.setUpdatedAt(LocalDateTime.now());
         return task;
     }
 
